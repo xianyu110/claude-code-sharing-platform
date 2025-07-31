@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册 - Claude Code 合租服务</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html">
+                    <i class="fas fa-code"></i>
+                    <span>Claude Code 合租</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">返回首页</a></li>
+                <li><a href="login.html" class="nav-link">已有账户</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 注册表单 -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>创建账户</h1>
+                <p>加入 Claude Code 合租服务，开启 AI 编程之旅</p>
+            </div>
+
+            <form class="auth-form" id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">姓</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="firstName" name="firstName" required placeholder="姓">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">名</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="lastName" name="lastName" required placeholder="名">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">邮箱地址</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" required placeholder="请输入您的邮箱">
+                    </div>
+                    <div class="input-help">我们将向此邮箱发送验证码</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" required placeholder="至少8位字符">
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="strengthFill"></div>
+                        </div>
+                        <div class="strength-text" id="strengthText">密码强度：弱</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="请再次输入密码">
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="plan">选择套餐</label>
+                    <select id="plan" name="plan" required class="form-select">
+                        <option value="">请选择合租套餐</option>
+                        <option value="basic">基础版 - ¥29/月</option>
+                        <option value="pro">专业版 - ¥59/月</option>
+                        <option value="enterprise">企业版 - ¥99/月</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span class="checkmark"></span>
+                        我同意 <a href="terms.html" target="_blank">服务条款</a> 和 <a href="privacy.html" target="_blank">隐私政策</a>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <span class="checkmark"></span>
+                        订阅我们的新闻通讯，获取最新功能更新
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span class="btn-text">创建账户</span>
+                    <i class="fas fa-spinner fa-spin btn-spinner" style="display: none;"></i>
+                </button>
+            </form>
+
+            <div class="auth-divider">
+                <span>或者</span>
+            </div>
+
+            <div class="social-login">
+                <button class="btn btn-social btn-github">
+                    <i class="fab fa-github"></i>
+                    使用 GitHub 注册
+                </button>
+                <button class="btn btn-social btn-google">
+                    <i class="fab fa-google"></i>
+                    使用 Google 注册
+                </button>
+            </div>
+
+            <div class="auth-footer">
+                <p>已有账户？ <a href="login.html">立即登录</a></p>
+            </div>
+        </div>
+
+        <div class="auth-features">
+            <h3>加入我们的优势</h3>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <div>
+                        <h4>社区支持</h4>
+                        <p>加入2000+开发者社区，获得技术支持</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <h4>使用统计</h4>
+                        <p>详细的使用数据分析，优化开发效率</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-headset"></i>
+                    <div>
+                        <h4>24/7 支持</h4>
+                        <p>全天候技术支持，随时解决您的问题</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>

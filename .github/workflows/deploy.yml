@@ -1,0 +1,53 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install -g html-minifier-terser
+        npm install -g clean-css-cli
+        npm install -g terser
+        
+    - name: Optimize assets
+      run: |
+        # 压缩CSS
+        mkdir -p dist/css
+        cleancss -o dist/css/style.min.css css/style.css
+        
+        # 压缩JS
+        mkdir -p dist/js
+        terser js/script.js -o dist/js/script.min.js --compress --mangle
+        terser js/auth.js -o dist/js/auth.min.js --compress --mangle
+        
+        # 复制HTML文件
+        cp index.html dist/
+        mkdir -p dist/pages
+        cp pages/*.html dist/pages/
+        
+        # 复制其他资源
+        cp README.md dist/
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        cname: your-domain.com  # 可选：自定义域名

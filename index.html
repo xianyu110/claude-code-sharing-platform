@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 合租平台 - 安全稳定的AI编程助手合租服务</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-users"></i>
+                <span>Claude Code 合租</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">首页</a>
+                <a href="#rooms" class="nav-link">合租房间</a>
+                <a href="#pricing" class="nav-link">定价</a>
+                <a href="#docs" class="nav-link">文档</a>
+                <a href="#dashboard" class="nav-link dashboard-link" style="display: none;">控制台</a>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="showLogin()">登录</button>
+                    <button class="btn btn-primary" onclick="showRegister()">注册</button>
+                </div>
+                <div class="user-menu" style="display: none;">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                        <span class="username"></span>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-outline" onclick="logout()">退出</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <!-- 首页部分 -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content animate__animated animate__fadeInUp">
+                    <h1>Claude Code 合租平台</h1>
+                    <p>与朋友一起分摊Claude Code Max订阅费用，安全稳定，省钱高效</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="500">0</div>
+                            <div class="stat-label">活跃用户</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="120">0</div>
+                            <div class="stat-label">合租房间</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="85">0</div>
+                            <div class="stat-label">费用节省%</div>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-lg" onclick="showRegister()">
+                            <i class="fas fa-rocket"></i>
+                            立即开始
+                        </button>
+                        <button class="btn btn-outline btn-lg" onclick="scrollToSection('rooms')">
+                            <i class="fas fa-search"></i>
+                            浏览房间
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 功能特性 -->
+            <div class="features">
+                <div class="container">
+                    <h2>为什么选择我们？</h2>
+                    <div class="features-grid">
+                        <div class="feature-card animate__animated animate__fadeInUp">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>安全可靠</h3>
+                            <p>采用端到端加密，所有接口请求都只经过你自己的服务器，直连Anthropic API</p>
+                        </div>
+                        <div class="feature-card animate__animated animate__fadeInUp">
+                            <div class="feature-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h3>透明计费</h3>
+                            <p>实时显示使用量和费用分摊，用了多少token一目了然，按官方价格换算费用</p>
+                        </div>
+                        <div class="feature-card animate__animated animate__fadeInUp">
+                            <div class="feature-icon">
+                                <i class="fas fa-users-cog"></i>
+                            </div>
+                            <h3>灵活管理</h3>
+                            <p>支持多人合租，智能账户轮换，房主权限管理，API密钥独立分配</p>
+                        </div>
+                        <div class="feature-card animate__animated animate__fadeInUp">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>使用统计</h3>
+                            <p>详细的使用报告和性能监控，包括使用情况、成本分析、性能监控</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 合租房间部分 -->
+        <section id="rooms" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>合租房间</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="showCreateRoom()">
+                            <i class="fas fa-plus"></i>
+                            创建房间
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 房间过滤器 -->
+                <div class="room-filters">
+                    <div class="filter-group">
+                        <label>订阅类型:</label>
+                        <select id="planFilter">
+                            <option value="">全部</option>
+                            <option value="pro">Pro ($20/月)</option>
+                            <option value="max">Max ($200/月)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>人数:</label>
+                        <select id="memberFilter">
+                            <option value="">全部</option>
+                            <option value="1-2">1-2人</option>
+                            <option value="3-5">3-5人</option>
+                            <option value="6+">6人以上</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>状态:</label>
+                        <select id="statusFilter">
+                            <option value="">全部</option>
+                            <option value="recruiting">招募中</option>
+                            <option value="full">已满员</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 房间列表 -->
+                <div class="rooms-grid" id="roomsGrid">
+                    <!-- 房间卡片将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 定价部分 -->
+        <section id="pricing" class="section">
+            <div class="container">
+                <h2>定价方案</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Claude Pro</h3>
+                            <div class="price">
+                                <span class="original">$20/月</span>
+                                <span class="shared">仅需 $4-7/月</span>
+                            </div>
+                        </div>
+                        <div class="pricing-features">
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>优先访问Claude</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>更多使用量</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>支持Claude-3 Sonnet</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>优先客户支持</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-full" onclick="showRegister()">选择方案</button>
+                    </div>
+
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">最受欢迎</div>
+                        <div class="pricing-header">
+                            <h3>Claude Max</h3>
+                            <div class="price">
+                                <span class="original">$200/月</span>
+                                <span class="shared">仅需 $33-67/月</span>
+                            </div>
+                        </div>
+                        <div class="pricing-features">
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>Pro所有功能</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>20x使用量</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>支持Claude-3 Opus</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>早期功能体验</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-full" onclick="showRegister()">选择方案</button>
+                    </div>
+
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>自定义</h3>
+                            <div class="price">
+                                <span class="shared">灵活定价</span>
+                            </div>
+                        </div>
+                        <div class="pricing-features">
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>按需付费</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>API直连</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>企业级支持</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>专属客服</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-full" onclick="contactUs()">联系我们</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文档部分 -->
+        <section id="docs" class="section">
+            <div class="container">
+                <h2>快速开始</h2>
+                <div class="docs-grid">
+                    <div class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h3>1. 注册账户</h3>
+                        <p>创建您的账户，验证邮箱，完成基本信息设置</p>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>2. 加入房间</h3>
+                        <p>浏览合租房间，选择合适的套餐和成员数量</p>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>3. 获取API Key</h3>
+                        <p>房主分配API密钥，配置您的开发环境</p>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>4. 开始使用</h3>
+                        <p>设置环境变量，享受Claude Code强大功能</p>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <h3>使用示例</h3>
+                    <div class="code-block">
+                        <pre><code># 设置环境变量
+export ANTHROPIC_BASE_URL="https://your-relay-server/api/"
+export ANTHROPIC_AUTH_TOKEN="your-api-key"
+
+# 使用Claude Code
+claude --dangerously-skip-permissions</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 控制台部分 -->
+        <section id="dashboard" class="section">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2>控制台</h2>
+                    <div class="user-info">
+                        <span>欢迎回来，<span class="username"></span></span>
+                    </div>
+                </div>
+
+                <!-- 控制台导航 -->
+                <div class="dashboard-nav">
+                    <button class="tab-btn active" data-tab="overview">概览</button>
+                    <button class="tab-btn" data-tab="rooms">我的房间</button>
+                    <button class="tab-btn" data-tab="usage">使用统计</button>
+                    <button class="tab-btn" data-tab="billing">账单</button>
+                    <button class="tab-btn" data-tab="settings">设置</button>
+                </div>
+
+                <!-- 概览标签 -->
+                <div class="tab-content active" id="overview">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">3</div>
+                                <div class="stat-label">加入的房间</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">$45.60</div>
+                                <div class="stat-label">本月费用</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">156K</div>
+                                <div class="stat-label">本月使用Token</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-savings"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">78%</div>
+                                <div class="stat-label">费用节省</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 快速操作 -->
+                    <div class="quick-actions">
+                        <h3>快速操作</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showJoinRoom()">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>加入房间</span>
+                            </button>
+                            <button class="action-btn" onclick="showCreateRoom()">
+                                <i class="fas fa-home"></i>
+                                <span>创建房间</span>
+                            </button>
+                            <button class="action-btn" onclick="generateApiKey()">
+                                <i class="fas fa-key"></i>
+                                <span>生成API Key</span>
+                            </button>
+                            <button class="action-btn" onclick="downloadUsageReport()">
+                                <i class="fas fa-download"></i>
+                                <span>下载报告</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 其他标签内容将通过JavaScript动态加载 -->
+                <div class="tab-content" id="rooms-tab"></div>
+                <div class="tab-content" id="usage-tab"></div>
+                <div class="tab-content" id="billing-tab"></div>
+                <div class="tab-content" id="settings-tab"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 模态框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>关于我们</h4>
+                    <p>基于claude-relay-service的专业Claude Code合租平台，提供安全稳定的AI编程助手合租服务。</p>
+                </div>
+                <div class="footer-section">
+                    <h4>功能特色</h4>
+                    <ul>
+                        <li><a href="#">多账户管理</a></li>
+                        <li><a href="#">透明计费</a></li>
+                        <li><a href="#">使用统计</a></li>
+                        <li><a href="#">安全加密</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>技术支持</h4>
+                    <ul>
+                        <li><a href="#">API 文档</a></li>
+                        <li><a href="#">部署指南</a></li>
+                        <li><a href="#">故障排除</a></li>
+                        <li><a href="#">开源项目</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系方式</h4>
+                    <p><i class="fas fa-envelope"></i> support@claude-sharing.com</p>
+                    <p><i class="fas fa-code"></i> 基于开源项目构建</p>
+                    <div class="social-links">
+                        <a href="https://github.com/xianyu110/claude-relay-service"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code 合租平台. 基于 MIT 开源协议.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 加载脚本 -->
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

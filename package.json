@@ -1,0 +1,54 @@
+{
+  "name": "claude-code-sharing-platform",
+  "version": "1.0.0",
+  "description": "Claude Code合租平台 - 基于claude-relay-service的静态网站",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "build": "npm run optimize",
+    "optimize": "npm run optimize:css && npm run optimize:js",
+    "optimize:css": "cleancss -o css/style.min.css css/style.css",
+    "optimize:js": "terser js/script.js -o js/script.min.js --compress --mangle && terser js/auth.js -o js/auth.min.js --compress --mangle",
+    "deploy": "npm run build && gh-pages -d .",
+    "lint": "eslint js/**/*.js",
+    "validate": "html-validate *.html pages/*.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/claude-code-sharing.git"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "programming-assistant",
+    "cost-sharing",
+    "relay-service",
+    "static-website",
+    "github-pages"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/your-username/claude-code-sharing/issues"
+  },
+  "homepage": "https://your-username.github.io/claude-code-sharing",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.1",
+    "eslint": "^8.45.0",
+    "gh-pages": "^5.0.0",
+    "html-minifier-terser": "^7.2.0",
+    "html-validate": "^8.2.0",
+    "serve": "^14.2.0",
+    "terser": "^5.19.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
